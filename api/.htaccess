@@ -1,0 +1,24 @@
+# Enable URL rewriting for API endpoints
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /TalebDZ/api/
+    
+    # Route all requests to the appropriate PHP file
+    # announcements.php/ads -> announcements.php
+    # announcements.php/videos -> announcements.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^announcements\.php/(.*)$ announcements.php [L,QSA]
+    
+    # Similarly for other API files
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([^/]+)\.php/(.*)$ $1.php [L,QSA]
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
