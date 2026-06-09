@@ -1,0 +1,132 @@
+════════════════════════════════════════════════════════
+  TalebDZ - Environment Variables Configuration Guide
+════════════════════════════════════════════════════════
+
+This file explains how to fill in db/.env correctly.
+Copy the values you get from Supabase and OpenRouter.
+
+════════════════════════════════════════════════════════
+📌 STEP 1: SUPABASE DATABASE PASSWORD
+════════════════════════════════════════════════════════
+
+WHERE TO GET IT:
+  1. Go to: https://supabase.com/dashboard
+  2. Select your project: pihrxzkkqutsebvpgokw
+  3. Click: Settings (gear icon) > Database
+  4. Scroll to: Connection String section
+  5. Select: URI tab
+  6. Copy the password part (between postgres: and @db)
+
+CURRENT LINE IN .env:
+  DATABASE_URL=postgresql://postgres:REPLACE_WITH_YOUR_DB_PASSWORD@db.pihrxzkkqutsebvpgokw.supabase.co:5432/postgres
+
+EXAMPLE (with fake password):
+  DATABASE_URL=postgresql://postgres:MyS3cur3P@ssw0rd@db.pihrxzkkqutsebvpgokw.supabase.co:5432/postgres
+
+YOUR VALUE:
+  DATABASE_URL=postgresql://postgres:_______________________@db.pihrxzkkqutsebvpgokw.supabase.co:5432/postgres
+
+
+════════════════════════════════════════════════════════
+📌 STEP 2: SUPABASE SERVICE ROLE KEY
+════════════════════════════════════════════════════════
+
+WHERE TO GET IT:
+  1. Same Supabase dashboard
+  2. Click: Settings > API
+  3. Find: Project API keys section
+  4. Copy: service_role key (secret) 
+     ⚠️  NOT the anon key!
+  5. The service_role key is much longer
+
+CURRENT LINE IN .env:
+  SUPABASE_SERVICE_ROLE_KEY=REPLACE_WITH_YOUR_ACTUAL_SERVICE_ROLE_KEY
+
+WHAT IT LOOKS LIKE:
+  - Starts with: eyJhbGci...
+  - Very long (300+ characters)
+  - Different from SUPABASE_ANON_KEY
+
+YOUR VALUE:
+  SUPABASE_SERVICE_ROLE_KEY=eyJhbGci_______________________________________
+
+
+════════════════════════════════════════════════════════
+📌 STEP 3: OPENROUTER API KEY (Optional - for AI chat)
+════════════════════════════════════════════════════════
+
+WHERE TO GET IT:
+  1. Go to: https://openrouter.ai/
+  2. Sign up or login
+  3. Go to: Keys page
+  4. Click: Create Key
+  5. Copy the key (starts with sk-)
+
+CURRENT LINE IN .env:
+  OPENROUTER_API_KEY=REPLACE_WITH_YOUR_OPENROUTER_KEY
+
+EXAMPLE:
+  OPENROUTER_API_KEY=sk-or-v1-1234567890abcdef...
+
+YOUR VALUE:
+  OPENROUTER_API_KEY=sk-or-v1-_______________________________________
+
+⚠️  If you skip this, the AI chat feature won't work.
+
+
+════════════════════════════════════════════════════════
+📌 STEP 4: VERIFY YOUR .env FILE
+════════════════════════════════════════════════════════
+
+After editing db/.env, it should look like this:
+
+# Supabase Configuration
+SUPABASE_URL=https://pihrxzkkqutsebvpgokw.supabase.co
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpaHJ4emtrcXV0c2VidnBnb2t3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1OTcwNzcsImV4cCI6MjA4OTE3MzA3N30.0quhPN-PFH8UedZwbsiR20_-QkbraVbfmHvXvnlf734
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGci... (your actual service role key)
+
+# Database URL
+DATABASE_URL=postgresql://postgres:YourActualPassword@db.pihrxzkkqutsebvpgokw.supabase.co:5432/postgres
+
+# JWT Configuration (no changes needed)
+SECRET_KEY=dalilio-super-secret-key-change-this-in-production-min-32-characters
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+# OpenRouter Configuration
+OPENROUTER_API_KEY=sk-or-v1-... (your actual API key)
+
+# Firebase (optional)
+FIREBASE_CREDENTIALS_PATH=./firebase-credentials.json
+
+
+✅ CHECKLIST:
+  [ ] No more "REPLACE_WITH_YOUR_" text in the file
+  [ ] DATABASE_URL has your real password (no brackets)
+  [ ] SUPABASE_SERVICE_ROLE_KEY is different from ANON_KEY
+  [ ] OPENROUTER_API_KEY starts with "sk-or-v1-"
+  [ ] All three keys filled in (or skip OpenRouter for now)
+
+
+════════════════════════════════════════════════════════
+🔒 SECURITY WARNING
+════════════════════════════════════════════════════════
+
+  • NEVER share your .env file with anyone
+  • NEVER commit .env to Git/GitHub
+  • NEVER post these keys in public forums
+  • Keep your service_role key especially secret!
+
+
+════════════════════════════════════════════════════════
+✅ DONE? TEST IT!
+════════════════════════════════════════════════════════
+
+Run this command to test database connection:
+
+  php -r "require 'db/config.php'; DB::connection(); echo 'Connected!';"
+
+If you see "Connected!" → Success! ✅
+If you see errors → Check your credentials again
+
+════════════════════════════════════════════════════════

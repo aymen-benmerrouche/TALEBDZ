@@ -1,0 +1,20 @@
+# Deny direct web access to database configuration files
+# This prevents .env and other sensitive files from being accessed via browser
+
+<Files ".env">
+    Require all denied
+</Files>
+
+<Files "config.php">
+    Require all denied
+</Files>
+
+<Files "functions.php">
+    Require all denied
+</Files>
+
+# For Apache 2.2 compatibility (if needed)
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
