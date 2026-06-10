@@ -283,6 +283,9 @@ $ogImage         = $pageUrl . 'photos/og-cover.jpg';
   </div>
 </nav>
 
+<!-- Mobile nav overlay -->
+<div class="mob-nav-overlay" id="mob-nav-overlay" onclick="closeMob()"></div>
+
 <!-- Mobile nav -->
 <nav class="mob-nav" id="mob-nav" aria-label="Mobile navigation">
   <a onclick="goTo('features'); closeMob()" data-t="nav_features">Features</a>

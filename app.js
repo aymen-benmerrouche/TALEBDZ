@@ -1,7 +1,78 @@
 /* ============================================================
    app.js — UniChat  |  All JavaScript
    Handles: theme · language (EN/AR/FR) · nav · admin panels
+   Mobile-optimized with touch support
    ============================================================ */
+
+// ── Prevent double-tap zoom on buttons (iOS) ────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Prevent double-tap zoom on interactive elements
+  const touchElements = document.querySelectorAll('button, .btn, .sb-item, .lang-opt, .tab-btn');
+  touchElements.forEach(el => {
+    el.style.touchAction = 'manipulation';
+  });
+  
+  // Initialize responsive image loading
+  initResponsiveImages();
+  
+  // Add swipe gesture support for mobile menu
+  initSwipeGestures();
+});
+
+// ── Responsive image loading ────────────────────────────────
+function initResponsiveImages() {
+  const images = document.querySelectorAll('img[loading="lazy"]');
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            imageObserver.unobserve(img);
+          }
+        }
+      });
+    });
+    images.forEach(img => imageObserver.observe(img));
+  }
+}
+
+// ── Swipe gesture support ───────────────────────────────────
+function initSwipeGestures() {
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  
+  document.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    // Swipe left to close mobile menu
+    if (diff > swipeThreshold) {
+      const mobNav = document.getElementById('mob-nav');
+      if (mobNav && mobNav.classList.contains('open')) {
+        closeMob();
+      }
+    }
+    
+    // Swipe right to open mobile menu (from left edge only)
+    if (diff < -swipeThreshold && touchStartX < 20) {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar && !sidebar.classList.contains('open') && window.innerWidth <= 900) {
+        toggleSidebar();
+      }
+    }
+  }
+}
 
 
 
@@ -491,8 +562,51 @@ function toggleTheme() {
 /* ============================================================
    MOBILE MENU  (index.html)
    ============================================================ */
-function toggleMob() { document.getElementById('mob-nav')?.classList.toggle('open'); }
-function closeMob()  { document.getElementById('mob-nav')?.classList.remove('open'); }
+function toggleMob() { 
+  const mobNav = document.getElementById('mob-nav');
+  const mobOverlay = document.getElementById('mob-nav-overlay');
+  const hamBtn = document.getElementById('ham-btn');
+  if (!mobNav) return;
+  
+  const isOpen = mobNav.classList.toggle('open');
+  if (mobOverlay) mobOverlay.classList.toggle('open', isOpen);
+  
+  // Update hamburger button aria attributes
+  if (hamBtn) {
+    hamBtn.setAttribute('aria-expanded', isOpen);
+    hamBtn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  }
+  
+  // Prevent body scroll when menu is open
+  if (isOpen) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+}
+
+function closeMob() { 
+  const mobNav = document.getElementById('mob-nav');
+  const mobOverlay = document.getElementById('mob-nav-overlay');
+  const hamBtn = document.getElementById('ham-btn');
+  if (!mobNav) return;
+  
+  mobNav.classList.remove('open');
+  if (mobOverlay) mobOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  
+  if (hamBtn) {
+    hamBtn.setAttribute('aria-expanded', 'false');
+    hamBtn.setAttribute('aria-label', 'Open menu');
+  }
+}
+
+// Close mobile menu on window resize if open
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 980) {
+    closeMob();
+  }
+});
 
 /* ============================================================
    SCROLL TO SECTION  (index.html)
@@ -505,8 +619,43 @@ function goTo(id) {
 /* ============================================================
    ADMIN SIDEBAR  (admin.html)
    ============================================================ */
-function toggleSidebar() { document.getElementById('sidebar')?.classList.toggle('open'); }
-function closeSidebar()  { document.getElementById('sidebar')?.classList.remove('open'); }
+function toggleSidebar() { 
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (!sidebar) return;
+  
+  const isOpen = sidebar.classList.toggle('open');
+  
+  // Show/hide overlay
+  if (overlay) {
+    overlay.style.display = isOpen ? 'block' : 'none';
+  }
+  
+  // Prevent body scroll when sidebar is open on mobile
+  if (window.innerWidth <= 900) {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+}
+
+function closeSidebar() { 
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (!sidebar) return;
+  
+  sidebar.classList.remove('open');
+  document.body.style.overflow = '';
+  
+  if (overlay) {
+    overlay.style.display = 'none';
+  }
+}
+
+// Close sidebar on window resize if needed
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) {
+    closeSidebar();
+  }
+});
 
 /* ============================================================
    ADMIN PANEL SWITCH  (admin.html)
