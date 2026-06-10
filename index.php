@@ -372,12 +372,12 @@ $ogImage         = $pageUrl . 'photos/og-cover.jpg';
     <div class="feat-visual">
       <div class="phone-frame tall">
         <div class="phone-slot">
-          <img src="photos/chat screen2.jpg" alt="TalebDZ AI chat — showing a student asking about enrollment deadlines" loading="lazy"/>
+          <img src="<?= htmlspecialchars($baseUrl) ?>/photos/chat screen2.jpg" alt="TalebDZ AI chat — showing a student asking about enrollment deadlines" loading="lazy"/>
         </div>
       </div>
       <div class="phone-frame">
         <div class="phone-slot">
-          <img src="photos/chat screen.jpg" alt="TalebDZ AI chat — showing cited answer from university documents" loading="lazy"/>
+          <img src="<?= htmlspecialchars($baseUrl) ?>/photos/chat screen.jpg" alt="TalebDZ AI chat — showing cited answer from university documents" loading="lazy"/>
         </div>
       </div>
     </div>
@@ -412,7 +412,7 @@ $ogImage         = $pageUrl . 'photos/og-cover.jpg';
     <div class="feat-visual">
       <div class="phone-frame tall">
         <div class="phone-slot">
-          <img src="photos/community.jpg" alt="TalebDZ community forum showing student posts" loading="lazy"/>
+          <img src="<?= htmlspecialchars($baseUrl) ?>/photos/community.jpg" alt="TalebDZ community forum showing student posts" loading="lazy"/>
         </div>
       </div>
     </div>
@@ -446,7 +446,7 @@ $ogImage         = $pageUrl . 'photos/og-cover.jpg';
     <div class="feat-visual">
       <div class="phone-frame tall">
         <div class="phone-slot">
-          <img src="photos/schedule.jpg" alt="TalebDZ reminders — color-coded deadline calendar" loading="lazy"/>
+          <img src="<?= htmlspecialchars($baseUrl) ?>/photos/schedule.jpg" alt="TalebDZ reminders — color-coded deadline calendar" loading="lazy"/>
         </div>
       </div>
     </div>
@@ -480,7 +480,7 @@ $ogImage         = $pageUrl . 'photos/og-cover.jpg';
     <div class="feat-visual">
       <div class="phone-frame tall">
         <div class="phone-slot">
-          <img src="photos/events.jpg" alt="TalebDZ events feed showing personalised upcoming events" loading="lazy"/>
+          <img src="<?= htmlspecialchars($baseUrl) ?>/photos/events.jpg" alt="TalebDZ events feed showing personalised upcoming events" loading="lazy"/>
         </div>
       </div>
     </div>
@@ -570,7 +570,7 @@ $ogImage         = $pageUrl . 'photos/og-cover.jpg';
 
     <div class="feat-visual" style="flex-direction:column; gap:1.25rem; align-items:center;">
       <img
-        src="photos/logo.jpg"
+        src="<?= htmlspecialchars($baseUrl) ?>/photos/logo.jpg"
         alt="TalebDZ Logo"
         class="about-logo"
         width="160" height="160"
