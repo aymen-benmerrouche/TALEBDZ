@@ -374,22 +374,385 @@ tr:hover td { background: var(--surface); }
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+
+/* ── Tablet & Small Desktop (900px and below) ── */
 @media (max-width: 900px) {
+  /* Sidebar becomes slide-out menu */
   .sidebar {
-    position: fixed; left: -250px; top: var(--nav-h);
+    position: fixed; 
+    left: -250px; 
+    top: var(--nav-h);
     height: calc(100svh - var(--nav-h));
-    z-index: 400; transition: left .26s, background var(--t), border-color var(--t);
+    z-index: 400; 
+    transition: left .26s, background var(--t), border-color var(--t);
+    box-shadow: 4px 0 16px rgba(0,0,0,.2);
   }
-  .sidebar.open { left: 0; }
+  .sidebar.open { 
+    left: 0;
+    box-shadow: 8px 0 24px rgba(0,0,0,.3);
+  }
+  
+  /* Show sidebar toggle button */
   .sb-toggle { display: flex; }
+  
+  /* Stack charts vertically */
   .charts-row { grid-template-columns: 1fr; }
+  
+  /* Form rows stack */
   .f-row2 { grid-template-columns: 1fr; }
+  
+  /* Admin main takes full width */
+  .admin-main { padding: 1.5rem 1rem; }
+  
+  /* Metrics adjust to 2 columns */
+  .metrics { 
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  /* Plan overview adjusts */
+  .plan-overview { 
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+  }
+  
+  /* Table header adjustments */
+  .tbl-head { 
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  /* Filter bar stacks */
+  .filter-bar { 
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .f-search { min-width: auto; width: 100%; }
+  
+  /* Report cards adjust */
+  .report-top { flex-direction: column; gap: 0.75rem; }
+  .report-actions { flex-wrap: wrap; }
+  
+  /* Notification items adjust */
+  .notif-item { padding: 0.75rem 1rem; }
+  
+  /* Settings cards */
+  .settings-card { padding: 1.2rem; }
 }
+
+/* ── Mobile (768px and below) ── */
+@media (max-width: 768px) {
+  /* Navigation adjustments */
+  .nav { padding: 0 1rem; }
+  .admin-crumb { display: none; }
+  
+  /* Sidebar adjustments */
+  .sidebar { width: 240px; left: -240px; }
+  .sb-section { padding: 0 0.85rem; }
+  .sb-item { padding: 0.55rem 0.7rem; font-size: 0.85rem; }
+  .sb-label { font-size: 0.6rem; padding: 0 0.7rem; }
+  
+  /* Admin header */
+  .admin-hd h1 { font-size: 1.4rem; }
+  .admin-hd p { font-size: 0.85rem; }
+  
+  /* Metrics to single column on very small screens */
+  .metrics { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .metric { padding: 1rem; }
+  .m-value { font-size: 1.6rem; }
+  .m-label { font-size: 0.68rem; }
+  .m-delta { font-size: 0.7rem; }
+  
+  /* Charts */
+  .chart-card { padding: 1.2rem; }
+  .chart-title { font-size: 0.85rem; margin-bottom: 1rem; }
+  .bar-wrap { height: 90px; }
+  .donut-wrap { width: 80px; height: 80px; margin: 0 auto 0.75rem; }
+  .donut-pct { font-size: 1rem; }
+  
+  /* Tables */
+  .tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { 
+    font-size: 0.8rem;
+    min-width: 600px; /* Ensure horizontal scroll for small screens */
+  }
+  th { padding: 0.65rem 0.9rem; font-size: 0.65rem; }
+  td { padding: 0.7rem 0.9rem; font-size: 0.82rem; }
+  
+  /* Table cards */
+  .tbl-card { margin-bottom: 1.2rem; }
+  .tbl-head { padding: 0.8rem 1rem; }
+  .tbl-head h3 { font-size: 0.85rem; }
+  
+  /* Activity feed */
+  .act-item { padding: 0.7rem 1rem; gap: 0.75rem; }
+  .act-ico { width: 30px; height: 30px; font-size: 0.85rem; }
+  .act-body { font-size: 0.8rem; }
+  .act-time { font-size: 0.68rem; }
+  
+  /* Report cards */
+  .report-card { padding: 1rem; }
+  .report-content { font-size: 0.85rem; max-width: 100%; }
+  .report-reason { padding: 0.45rem 0.75rem; font-size: 0.8rem; }
+  .report-actions { gap: 0.5rem; }
+  .btn-accept, .btn-refuse, .btn-view-full { 
+    padding: 0.38rem 0.85rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Plan cards */
+  .plan-overview { grid-template-columns: 1fr; }
+  .plan-card { padding: 1.1rem; }
+  .plan-count { font-size: 1.6rem; }
+  
+  /* Settings cards */
+  .settings-card h3 { font-size: 0.9rem; padding-bottom: 0.7rem; margin-bottom: 1rem; }
+  .toggle-row { padding: 0.55rem 0; }
+  .tgl-label { font-size: 0.85rem; }
+  
+  /* FAQ list */
+  .faq-item { padding: 0.9rem 1rem; gap: 0.75rem; }
+  .faq-q { font-size: 0.85rem; }
+  .faq-a { font-size: 0.78rem; }
+  
+  /* Modals */
+  .modal-box { padding: 1.5rem; max-width: 90vw; }
+  .modal-box h3 { font-size: 1rem; margin-bottom: 1.2rem; }
+  .modal-footer { gap: 0.6rem; }
+  
+  /* Toast notifications */
+  .toast { 
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    font-size: 0.82rem;
+    padding: 0.65rem 1rem;
+  }
+  
+  /* Tabs */
+  .plan-tabs { gap: 0.4rem; }
+  .plan-tab { padding: 0.38rem 0.95rem; font-size: 0.8rem; }
+  .tab-btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
+}
+
+/* ── Small Mobile (600px and below) ── */
 @media (max-width: 600px) {
-  table { font-size: .8rem; }
-  th, td { padding: .65rem .9rem; }
-  .metrics { grid-template-columns: repeat(2, 1fr); }
-  .plan-overview { grid-template-columns: repeat(2,1fr); }
+  /* Navigation ultra compact */
+  .nav-right { gap: 0.35rem; }
+  .theme-btn, .lang-btn { 
+    width: 34px; 
+    height: 34px;
+    padding: 0;
+  }
+  .lang-btn span { display: none; }
+  .lang-btn i:first-child { margin: 0; }
+  
+  /* Sidebar narrower */
+  .sidebar { width: 220px; left: -220px; }
+  .sb-item { font-size: 0.82rem; padding: 0.5rem 0.65rem; }
+  .sb-item i { font-size: 0.95rem; }
+  
+  /* Admin header */
+  .admin-hd { margin-bottom: 1.5rem; }
+  .admin-hd h1 { font-size: 1.25rem; }
+  .admin-hd p { font-size: 0.82rem; }
+  
+  /* Metrics single column */
+  .metrics { 
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+  .metric { padding: 0.9rem; }
+  .m-value { font-size: 1.5rem; }
+  .m-label { font-size: 0.65rem; }
+  
+  /* Charts */
+  .chart-card { padding: 1rem; }
+  .bar-wrap { height: 80px; gap: 4px; }
+  .bar-labels { gap: 4px; margin-top: 4px; }
+  .bar-lbl { font-size: 0.55rem; }
+  .donut-wrap { width: 72px; height: 72px; }
+  
+  /* User bars */
+  .user-bars { gap: 0.7rem; }
+  .u-bar-row { gap: 0.25rem; }
+  .u-bar-meta { font-size: 0.75rem; }
+  .u-bar-track { height: 7px; }
+  
+  /* Tables ultra compact */
+  table { 
+    font-size: 0.75rem;
+    min-width: 550px;
+  }
+  th { padding: 0.55rem 0.75rem; font-size: 0.62rem; }
+  td { padding: 0.6rem 0.75rem; font-size: 0.78rem; }
+  .tbl-head { padding: 0.7rem 0.85rem; }
+  .tbl-head h3 { font-size: 0.82rem; }
+  
+  /* Activity feed compact */
+  .act-item { padding: 0.65rem 0.85rem; gap: 0.65rem; }
+  .act-ico { width: 28px; height: 28px; font-size: 0.8rem; }
+  .act-body { font-size: 0.78rem; }
+  .act-time { font-size: 0.65rem; }
+  
+  /* Reports compact */
+  .report-card { padding: 0.9rem; }
+  .report-type { font-size: 0.65rem; }
+  .report-content { font-size: 0.82rem; }
+  .report-info { font-size: 0.75rem; }
+  .report-reason { font-size: 0.78rem; padding: 0.4rem 0.7rem; }
+  .report-actions { 
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .btn-accept, .btn-refuse, .btn-view-full { 
+    width: 100%;
+    justify-content: center;
+    padding: 0.42rem 0.9rem;
+  }
+  
+  /* Notifications compact */
+  .notif-item { padding: 0.75rem 0.9rem; gap: 0.7rem; }
+  .notif-ico { width: 32px; height: 32px; font-size: 0.9rem; }
+  .notif-title { font-size: 0.82rem; }
+  .notif-sub { font-size: 0.75rem; }
+  .notif-time { font-size: 0.68rem; }
+  
+  /* Plan overview single column */
+  .plan-overview { 
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .plan-card { padding: 1rem; }
+  .plan-count { font-size: 1.5rem; }
+  .plan-revenue { font-size: 0.78rem; }
+  
+  /* Settings */
+  .settings-card { padding: 1rem; margin-bottom: 1rem; }
+  .settings-card h3 { font-size: 0.88rem; }
+  .toggle-row { padding: 0.5rem 0; }
+  .tgl-label { font-size: 0.82rem; }
+  .tgl { width: 34px; height: 19px; }
+  .tgl::after { width: 13px; height: 13px; top: 3px; left: 3px; }
+  .tgl.on::after { transform: translateX(15px); }
+  
+  /* FAQ compact */
+  .faq-list { gap: 0.65rem; }
+  .faq-item { padding: 0.85rem 0.9rem; gap: 0.65rem; }
+  .faq-q { font-size: 0.82rem; }
+  .faq-a { font-size: 0.76rem; }
+  .faq-actions { gap: 0.35rem; }
+  .ico-btn { width: 28px; height: 28px; font-size: 0.8rem; }
+  
+  /* Buttons */
+  .btn-sm { padding: 0.38rem 0.85rem; font-size: 0.78rem; }
+  .btn-md { padding: 0.5rem 1.05rem; font-size: 0.82rem; }
+  
+  /* Filter bar */
+  .filter-bar { gap: 0.6rem; margin-bottom: 1.1rem; }
+  .f-search { padding: 0.55rem 0.9rem; font-size: 0.82rem; }
+  .f-sel { padding: 0.55rem 0.9rem; font-size: 0.82rem; }
+  
+  /* Modals */
+  .modal-box { padding: 1.25rem; }
+  .modal-box h3 { font-size: 0.95rem; }
+  .modal-footer { 
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .modal-footer .btn { width: 100%; justify-content: center; }
+  
+  /* Toast position */
+  .toast { 
+    bottom: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+  }
+  
+  /* Badge adjustments */
+  .bdg { font-size: 0.68rem; padding: 0.18rem 0.55rem; }
+  .sb-badge { font-size: 0.6rem; padding: 1px 6px; }
+  
+  /* Icon buttons */
+  .btn-ico { width: 30px; height: 30px; font-size: 0.85rem; }
+  
+  /* Tab buttons */
+  .tab-btn { 
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    gap: 0.4rem;
+  }
+  
+  /* Status badges */
+  .status-badge { 
+    font-size: 0.72rem;
+    padding: 0.28rem 0.65rem;
+  }
+  .date-badge { font-size: 0.75rem; padding: 0.22rem 0.55rem; }
+  .views-count { font-size: 0.78rem; }
+}
+
+/* ── Extra Small Mobile (400px and below) ── */
+@media (max-width: 400px) {
+  /* Admin main */
+  .admin-main { padding: 1rem 0.75rem; }
+  
+  /* Metrics ultra compact */
+  .metrics { 
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+  .metric { padding: 0.85rem; }
+  .m-value { font-size: 1.4rem; }
+  
+  /* Charts minimal */
+  .chart-card { padding: 0.9rem; }
+  .bar-wrap { height: 70px; }
+  
+  /* Tables */
+  table { min-width: 500px; }
+  th { padding: 0.5rem 0.65rem; }
+  td { padding: 0.55rem 0.65rem; }
+  
+  /* Activity ultra compact */
+  .act-item { padding: 0.6rem 0.75rem; }
+  
+  /* Reports stack everything */
+  .report-card { padding: 0.85rem; }
+  
+  /* Settings */
+  .settings-card { padding: 0.9rem; }
+  
+  /* FAQ */
+  .faq-item { padding: 0.75rem 0.8rem; }
+}
+
+/* ── Landscape Mobile (max-height 500px) ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .sidebar { 
+    height: calc(100vh - var(--nav-h));
+    overflow-y: auto;
+  }
+  .metrics { grid-template-columns: repeat(3, 1fr); }
+  .chart-card { padding: 1rem; }
+  .bar-wrap { height: 80px; }
+}
+
+/* ── Print styles for admin ── */
+@media print {
+  .nav, .sidebar, .sb-toggle, .theme-btn, .lang-wrap, .admin-avatar,
+  .btn, button, .filter-bar, .tbl-head .btn { display: none; }
+  
+  .admin-wrap { display: block; }
+  .admin-main { padding: 0; }
+  .sidebar { position: static; }
+  
+  body { background: white; color: black; }
+  .panel { display: block !important; page-break-after: always; }
+  .tbl-card, .chart-card { page-break-inside: avoid; }
+  table { font-size: 0.75rem; }
+  .metrics { grid-template-columns: repeat(3, 1fr); }
 }
  
 
