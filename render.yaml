@@ -1,0 +1,132 @@
+# ============================================================
+# render.yaml - Render Blueprint Configuration
+# ============================================================
+# This file defines the infrastructure as code for deploying
+# TalebDZ on Render.com using Docker
+# ============================================================
+
+services:
+  # ============================================================
+  # Web Service - TalebDZ PHP Application
+  # ============================================================
+  - type: web
+    name: talebdz-app
+    env: docker
+    # Plan: Select based on your needs
+    # - free (512 MB RAM, spins down after inactivity)
+    # - starter ($7/mo, 512 MB RAM, always on)
+    # - standard ($25/mo, 2 GB RAM)
+    plan: free
+    
+    # Dockerfile configuration
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    
+    # Auto-deploy on git push
+    autoDeploy: true
+    
+    # Health check configuration
+    healthCheckPath: /
+    
+    # Environment variables
+    # IMPORTANT: Set these in the Render dashboard for security
+    # Do NOT hardcode sensitive values here
+    envVars:
+      # ========================================================
+      # Supabase Configuration
+      # ========================================================
+      - key: SUPABASE_URL
+        sync: false
+        # Example: https://your-project.supabase.co
+        
+      - key: SUPABASE_ANON_KEY
+        sync: false
+        # Get from Supabase project settings
+        
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+        # Get from Supabase project settings (keep secret!)
+        
+      # ========================================================
+      # Database Configuration
+      # ========================================================
+      - key: DATABASE_URL
+        sync: false
+        # Example: postgresql://postgres.xyz:password@aws-0-region.pooler.supabase.com:6543/postgres
+        # Use connection pooling for better performance
+        
+      # ========================================================
+      # Security Configuration
+      # ========================================================
+      - key: SECRET_KEY
+        generateValue: true
+        # Render will auto-generate a secure random value
+        
+      - key: ALGORITHM
+        value: HS256
+        # JWT algorithm
+        
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "30"
+        # JWT token expiration time
+        
+      # ========================================================
+      # API Keys
+      # ========================================================
+      - key: OPENROUTER_API_KEY
+        sync: false
+        # Get from https://openrouter.ai/keys
+        # Required for AI chatbot functionality
+        
+      # ========================================================
+      # Optional: REST API Mode
+      # ========================================================
+      - key: USE_REST_API
+        value: "true"
+        # Set to true to use Supabase REST API instead of direct DB connection
+        
+      # ========================================================
+      # Application Configuration
+      # ========================================================
+      - key: APP_ENV
+        value: production
+        
+      - key: PHP_DISPLAY_ERRORS
+        value: "Off"
+        # Disable error display in production
+        
+      - key: PHP_LOG_ERRORS
+        value: "On"
+        # Enable error logging
+
+# ============================================================
+# Optional: Add a PostgreSQL Database (if not using Supabase)
+# ============================================================
+# Uncomment the section below if you want Render to manage your database
+# instead of using Supabase
+
+# databases:
+#   - name: talebdz-db
+#     databaseName: talebdz
+#     user: talebdz_user
+#     plan: free
+#     # The database URL will be automatically injected as DATABASE_URL
+#     # in the web service environment variables
+
+# ============================================================
+# Deployment Notes
+# ============================================================
+# 1. Create a new Web Service on Render
+# 2. Connect your GitHub repository
+# 3. Render will automatically detect this render.yaml file
+# 4. Set the environment variables in the Render dashboard:
+#    - Go to Environment tab
+#    - Add all the required variables listed above
+# 5. Deploy!
+#
+# For manual deployment without render.yaml:
+# 1. Create a new "Web Service" on Render
+# 2. Select "Docker" as the environment
+# 3. Set the Dockerfile path to "./Dockerfile"
+# 4. Add environment variables manually in the dashboard
+# 5. Deploy

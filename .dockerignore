@@ -1,0 +1,148 @@
+# ============================================================
+# .dockerignore - Exclude files from Docker build context
+# ============================================================
+# This file reduces the Docker build context size and prevents
+# sensitive or unnecessary files from being copied into the image
+
+# ============================================================
+# Version Control
+# ============================================================
+.git
+.gitignore
+.gitattributes
+
+# ============================================================
+# IDE and Editor Files
+# ============================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ============================================================
+# Environment and Secrets
+# ============================================================
+# NOTE: .env files are intentionally excluded here
+# You should configure environment variables in Render dashboard
+.env
+.env.local
+.env.*.local
+.env.backup
+.env.alternatives
+db/.env
+db/.env.backup
+db/.env.alternatives
+
+# Sensitive credentials
+*.pem
+*.key
+*.crt
+firebase-credentials.json
+
+# ============================================================
+# Documentation and Development Files
+# ============================================================
+README.md
+README.txt
+LICENSE
+CHANGELOG.md
+*.md
+docs/
+documentation/
+
+# ============================================================
+# Docker Files (no need to include in image)
+# ============================================================
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
+.dockerignore
+
+# ============================================================
+# Database Files
+# ============================================================
+# SQL schema files are not needed in production
+# They should be applied directly to the database
+db/*.sql
+*.sql
+*.sqlite
+*.db
+
+# Database backup files
+*.dump
+*.backup
+
+# ============================================================
+# Logs and Temporary Files
+# ============================================================
+*.log
+logs/
+tmp/
+temp/
+cache/
+.cache/
+
+# ============================================================
+# Testing and CI/CD
+# ============================================================
+tests/
+test/
+.phpunit.result.cache
+phpunit.xml
+.travis.yml
+.gitlab-ci.yml
+.github/
+
+# ============================================================
+# Node.js (if any frontend build tools were used)
+# ============================================================
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# ============================================================
+# Composer (PHP dependency manager)
+# ============================================================
+vendor/
+composer.lock
+
+# ============================================================
+# Build and Deployment Files
+# ============================================================
+.htaccess.backup
+*.bak
+*.old
+*.orig
+
+# ============================================================
+# OS Generated Files
+# ============================================================
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# ============================================================
+# Large Media Files (optimize for production)
+# ============================================================
+# Uncomment if you want to exclude large files
+# *.mp4
+# *.avi
+# *.mov
+# *.zip
+# *.tar.gz
+
+# ============================================================
+# XAMPP Specific Files
+# ============================================================
+# Since this project was developed with XAMPP
+xampp/
+htdocs/
+.xampp

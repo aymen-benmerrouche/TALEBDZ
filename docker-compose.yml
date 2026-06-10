@@ -1,0 +1,69 @@
+# ============================================================
+# docker-compose.yml - Local Development Environment
+# ============================================================
+# This file is for local testing only - NOT for Render deployment
+# Use this to test the Docker container locally before deploying
+# ============================================================
+
+version: '3.8'
+
+services:
+  # ============================================================
+  # TalebDZ Web Application
+  # ============================================================
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: talebdz-app
+    ports:
+      - "8080:80"
+    environment:
+      # Supabase Configuration
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      
+      # Database Configuration
+      DATABASE_URL: ${DATABASE_URL}
+      
+      # Security
+      SECRET_KEY: ${SECRET_KEY:-development-secret-key-change-in-production}
+      ALGORITHM: ${ALGORITHM:-HS256}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      
+      # API Keys
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      
+      # Application
+      APP_ENV: development
+      USE_REST_API: ${USE_REST_API:-true}
+    volumes:
+      # Mount application code for development hot-reload
+      - ./:/var/www/html
+      # Preserve Apache logs
+      - apache-logs:/var/log/apache2
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  apache-logs:
+    driver: local
+
+# ============================================================
+# Usage Instructions
+# ============================================================
+# 1. Copy db/.env.example to .env (if not exists)
+# 2. Fill in your environment variables in .env
+# 3. Run: docker-compose up -d
+# 4. Access the application at http://localhost:8080
+# 5. View logs: docker-compose logs -f
+# 6. Stop: docker-compose down
+#
+# For production deployment on Render, use the Dockerfile directly
+# and configure environment variables in the Render dashboard
